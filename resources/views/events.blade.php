@@ -28,7 +28,14 @@
                         {{ $event->is_paid ? 'Paid' : 'Free' }}
                     </span>
                 </div>
-
+                <div class="position-absolute bottom-0 end-0 m-2">
+                    @php
+                        $today=now()->toDateString();
+                    @endphp
+                    <span class="badge rounded-pill bg-{{ $event->event_date>$today ? 'success' : 'danger' }} bg-opacity-90 px-3 py-2 shadow-sm">
+                        {{ $event->event_date>$today ? 'event starting soon' : 'event ended' }}
+                    </span>
+                </div>
                 <!-- Category Badge -->
                 <div class="position-absolute top-0 start-0 m-2">
                     <span class="badge rounded-pill bg-info bg-opacity-90 px-3 py-2 shadow-sm">

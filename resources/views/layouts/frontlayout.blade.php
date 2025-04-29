@@ -53,7 +53,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('user.ticket') }}">
                             <i class="fas fa-ticket-alt me-1"></i>Tickets
                         </a>
                     </li>

@@ -11,7 +11,6 @@
         @endforeach
         <button type="submit">Pay with eSewa</button>
     </form>
-
     <script>
         document.getElementById('esewaForm').submit();
     </script>

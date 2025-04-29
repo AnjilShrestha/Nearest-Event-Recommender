@@ -42,7 +42,35 @@ class UserController extends Controller
 
     public function upcomingevent()
     {
-        $events=TicketPurchased::with(['user','Event'])->paginate(2);
-        return view('users.dashboard',compact('events'));   
+
+        $today = now()->toDateString();
+        $eventPurchases = TicketPurchased::where('user_id', auth()->id())
+        ->with('event')
+        ->get()
+        ->groupBy('event_id');
+
+        $upcomingEvents = $eventPurchases->filter(function ($purchases) use ($today) {
+            return optional($purchases->first()->event)->event_date > $today;
+        });
+
+        $endedEvents = $eventPurchases->filter(function ($purchases) use ($today) {
+            return optional($purchases->first()->event)->event_date <= $today;
+        });
+        $upcomingCount = $upcomingEvents->count();
+        $endedCount = $endedEvents->count();
+        return view('users.dashboard',[
+            'upcomingEvents' => $upcomingEvents,
+            'endedEvents' => $endedEvents,
+            'upcomingCount' => $upcomingCount,
+            'endedCount' => $endedCount,
+        ]);   
+    }
+
+    public function tickets()
+    {
+        $tickets=TicketPurchased::where('user_id', auth()->id())
+        ->paginate(5);
+
+        return view('users.ticket',compact('tickets'));
     }
 }

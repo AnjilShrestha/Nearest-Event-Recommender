@@ -21,11 +21,21 @@ class PaymentController extends Controller
         $payment->total=$totalamt;
         $payment->quantity=$quantity;
         $payment->transaction_id=$pid;
-        $payment->payment_method="Esewa";
         $payment->user_id=$user_id;
         $payment->event_id=$event_id;
+        if($totalamt>0)
+        {
+            $payment->payment_method="Esewa";
+        }else{
+            $payment->payment_status="paid";
+        }
         $payment->save();
-        return $this->redirectToEsewa($pid,$totalamt);
+        if($totalamt>0)
+        {
+            return $this->redirectToEsewa($pid,$totalamt);
+        }else{
+            return redirect()->back()->with('success',"Payment Success ful");
+        }
     } 
     private function generateSignature($data, $secretKey) {
         $signatureData = "";

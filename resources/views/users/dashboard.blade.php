@@ -14,7 +14,7 @@
       object-fit: cover;
     }
   </style>
-  <div class="container py-5">
+  <div class="container">
     <h2>Welcome back,{{ auth('user')->user()->name }}</h2>
     <p class="text-muted">Here's what's happening with your events</p>
   
@@ -23,14 +23,14 @@
       <div class="col-md-4">
         <div class="card card-metric text-center p-3">
           <h6>Events Attended</h6>
-          <h3></h3>
+          <h3>{{ $endedCount}}</h3>
           <p class="text-muted">Lifetime attendance</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-metric text-center p-3">
           <h6>Upcoming Events</h6>
-          <h3></h3>
+          <h3>{{ $upcomingCount}}</h3>
           <p class="text-muted">Events you're attending</p>
         </div>
       </div>
@@ -49,30 +49,28 @@
         <h5>Your Upcoming Events</h5>
       </div>
   
-      @forelse($events as $event)
-        <div class="card mb-3 event-card">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img src="{{ asset('storage/'.$event->event->image) }}" class="img-fluid rounded-start" alt="Tech Conference">
+      @forelse($upcomingEvents as $group)
+      @php $event = $group->first()->event; @endphp
+      <div class="card mb-3 event-card">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ asset('storage/'.$event->image) }}" class="img-fluid rounded-start" alt="Event Image">
+          </div>
+          <div class="col-md-8 d-flex flex-column justify-content-between p-3">
+            <div>
+              <h5 class="card-title mb-1">{{ $event->title }}</h5>
+              <p class="mb-1"><i class="bi bi-calendar-event"></i> {{ $event->event_date }}</p>
+              <p class="mb-1"><i class="bi bi-clock"></i> {{ $event->starttime }} - {{ $event->endtime }}</p>
+              <p class="mb-0"><i class="bi bi-geo-alt"></i> {{ $event->location }}</p>
             </div>
-            <div class="col-md-8 d-flex flex-column justify-content-between p-3">
-              <div>
-                <h5 class="card-title mb-1">{{$event->event->title}}</h5>
-                <p class="mb-1"><i class="bi bi-calendar-event"></i> {{$event->event->event_date}}</p>
-                <p class="mb-1"><i class="bi bi-clock"></i> {{ $event->event->starttime }} - {{ $event->event->endtime }}</p>
-                <p class="mb-0"><i class="bi bi-geo-alt"></i>{{$event->event->location}}</p>
-              </div>
-              <div class="text-end">
-                <a href="{{route('event.details', $event->event->id) }}" class="btn btn-dark btn-sm">View Details</a>
-              </div>
+            <div class="text-end">
+              <a href="{{ route('event.details', $event->id) }}" class="btn btn-dark btn-sm">View Details</a>
             </div>
           </div>
         </div>
-        @empty
-        No upcoming your events 
-      @endforelse
+      </div>
+  @empty
+    <p>No upcoming events.</p>
+  @endforelse
   
-      
-  
-
 @endsection
