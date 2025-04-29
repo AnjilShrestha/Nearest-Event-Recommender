@@ -14,6 +14,7 @@
                     <th>Event name</th>
                     <th>Event date</th>
                     <th>Event time</th>
+                    <th>Number of tickets</th>
                     <th>Transaction number</th>
                     <th>Payment method</th>
                     <th>Payment Status</th>
@@ -26,6 +27,7 @@
                   <td>{{$ticket->event->title}}</td>
                   <td>{{$ticket->event->event_date}}</td>
                   <td>{{$ticket->event->starttime}}-{{$ticket->event->endtime}}</td>
+                  <td>{{$ticket->quantity}}</td>
                   <td>{{$ticket->transaction_id}}</td>
                   <td>{{$ticket->payment_method}}</td>
                   @php

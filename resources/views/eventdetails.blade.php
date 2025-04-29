@@ -110,18 +110,13 @@
         </div>
         <div class="tags mt-3 mb-3">
             <strong>Tags:</strong>
-            @if($event->tags)
-                @php
-                    $tags = explode(',', trim($event->tags, '"'));
-                @endphp
-                @foreach($tags as $tag)
-                <span class="badge bg-secondary">{{ $tag }}</span>
+            @if(!empty($event->tags))
+                @foreach(json_decode($event->tags, true) as $index => $tag)  
+                    <span class="badge bg-secondary">{{ $tag }}</span>
                 @endforeach
             @endif
             
         </div>
-
-    
         <ul class="nav nav-tabs mb-4" id="eventTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true">About</button>
@@ -161,6 +156,9 @@
                 <p class="mt-3"><i class="bi bi-geo-alt-fill"></i> {{$event->location}}</p>
             </div>
         </div>
+    </div>
+    <div>
+        @include('eventcard')
     </div>
 @endsection
 <script>

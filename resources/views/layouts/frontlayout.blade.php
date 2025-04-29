@@ -100,7 +100,7 @@
     <div class="container my-5">
         @yield('content')
     </div>
-    
+    @include('toast.message')
     <!-- Footer -->
     <footer class="bg-primary text-white text-center py-3 absolute-bottom-0 w-100">
         <div class="container">

@@ -69,6 +69,7 @@ class UserController extends Controller
     public function tickets()
     {
         $tickets=TicketPurchased::where('user_id', auth()->id())
+        ->orderBy('desc')
         ->paginate(5);
 
         return view('users.ticket',compact('tickets'));

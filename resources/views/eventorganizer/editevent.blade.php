@@ -120,7 +120,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label">Tags (comma-separated)</label>
-                                    <input type="text" name="tags" class="form-control" placeholder="e.g. music, food, outdoor" value="{{ old('tags',$eventdetails->tags) }}">
+                                    <input type="text" name="tags" class="form-control" placeholder="e.g. music, food, outdoor" value="{{ old('tags',$tags) }}">
                                     @error('tags') <small class="invalid-feedback">{{ $message }}</small> @enderror
                                 </div>
                                 <div class="form-group mb-3">

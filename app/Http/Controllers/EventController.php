@@ -111,7 +111,8 @@ class EventController extends Controller
             $event->features = json_encode($request->features);
         }
         if ($request->has('tags')) {
-            $event->tags = json_encode($request->tags); 
+            $tags = explode(',', $request->input('tags'));
+            $event->tags = json_encode(array_map('trim', $tags));
         }
         $validated['is_paid'] = $request->has('is_paid') ? 1 : 0;
         if (!$validated['is_paid']) {
@@ -130,7 +131,9 @@ class EventController extends Controller
     {
         $eventdetails=Event::FindorFail($id);
         $categories=EventCategory::all();
-        return view('eventorganizer.editevent',compact('eventdetails','categories'));
+        $tagsArray = json_decode($eventdetails->tags);
+        $tags=implode(', ', $tagsArray);
+        return view('eventorganizer.editevent',compact('eventdetails','categories','tags'));
     }
 
 
@@ -156,7 +159,8 @@ class EventController extends Controller
             $event->features = json_encode($request->features);
         }
         if ($request->has('tags')) {
-            $event->tags = json_encode($request->tags); 
+            $tags = explode(',', $request->input('tags'));
+            $event->tags = json_encode(array_map('trim', $tags));
         }
         // Handling image upload
         if ($request->hasFile('image')) {
